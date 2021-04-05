@@ -1,12 +1,12 @@
 import React from 'react';
 import { Container, Text } from './styles';
 
-const Login = () => {
+const Profile = () => {
   return (
     <Container>
-      <Text>Login</Text>
+      <Text>Profile</Text>
     </Container>
   );
 };
 
-export default Login;
+export default Profile;

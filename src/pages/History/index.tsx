@@ -1,12 +1,12 @@
 import React from 'react';
 import { Container, Text } from './styles';
 
-const About = () => {
+const History = () => {
   return (
     <Container>
-      <Text>About</Text>
+      <Text>History</Text>
     </Container>
   );
 };
 
-export default About;
+export default History;

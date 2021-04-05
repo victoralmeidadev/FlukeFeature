@@ -1,47 +1,68 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import { useAuth } from './contexts/auth';
 
 import SplashScreen from './pages/SplashScreen';
 import Home from './pages/Home';
-import About from './pages/About';
-import Start from './pages/Start';
-import Login from './pages/Login';
-import Register from './pages/Register';
+import History from './pages/History';
+import Profile from './pages/Profile';
 
-const AuthStack = createStackNavigator();
-const MainStack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
 function MainStackNavigator() {
   return (
-    <MainStack.Navigator screenOptions={{ headerShown: false }}>
-      <MainStack.Screen name="Home" component={Home} />
-      <MainStack.Screen name="About" component={About} />
-    </MainStack.Navigator>
-  );
-}
-
-function AuthStackNavigator() {
-  return (
-    <AuthStack.Navigator screenOptions={{ headerShown: false }}>
-      <AuthStack.Screen name="Start" component={Start} />
-      <AuthStack.Screen name="Login" component={Login} />
-      <AuthStack.Screen name="Register" component={Register} />
-    </AuthStack.Navigator>
+    <Tab.Navigator
+      initialRouteName="Home"
+      tabBarOptions={{
+        activeTintColor: '#0ef500',
+        inactiveTintColor: '#333',
+        labelStyle: { fontSize: 13, padding: 2 },
+        tabStyle: {
+          backgroundColor: '#fff',
+        },
+      }}>
+      <Tab.Screen
+        name="History"
+        component={History}
+        options={{
+          tabBarLabel: 'histórico',
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="history" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Home"
+        component={Home}
+        options={{
+          tabBarLabel: 'início',
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="home" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          tabBarLabel: 'perfil',
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="user" size={size} color={color} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
   );
 }
 
 export default function Routes() {
-  const { loading, isSigned } = useAuth();
+  const { loading } = useAuth();
 
   if (loading) {
     return <SplashScreen />;
   } else {
-    if (isSigned) {
-      return MainStackNavigator();
-    } else {
-      return AuthStackNavigator();
-    }
+    return MainStackNavigator();
   }
 }
