@@ -1,8 +1,10 @@
 import axios from 'axios';
-// @ts-ignore
-import { BASE_URL, AUTH_HEADER } from 'react-native-dotenv';
+import { BASE_URL, AUTH_HEADER } from '@env';
 
-export default axios.create({
+const axiosConfig = axios.create({
   baseURL: BASE_URL,
-  headers: { Authorization: AUTH_HEADER },
 });
+
+axiosConfig.defaults.headers.common['Authorization'] = AUTH_HEADER;
+
+export default axiosConfig;

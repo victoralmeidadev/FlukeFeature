@@ -2,7 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-import { useAuth } from './contexts/auth';
+import { useAuth } from './hooks/auth';
 
 import SplashScreen from './pages/SplashScreen';
 import Home from './pages/Home';

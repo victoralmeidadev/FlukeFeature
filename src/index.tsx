@@ -3,15 +3,18 @@ import React from 'react';
 import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 
-import AuthProvider from './contexts/auth';
+import AuthProvider from './hooks/auth';
+import InformationProvider from './hooks/information';
 import Routes from './routes';
 
 const App = () => {
   return (
     <NavigationContainer>
       <AuthProvider>
-        <StatusBar hidden barStyle="light-content" />
-        <Routes />
+        <InformationProvider>
+          <StatusBar hidden barStyle="light-content" />
+          <Routes />
+        </InformationProvider>
       </AuthProvider>
     </NavigationContainer>
   );
