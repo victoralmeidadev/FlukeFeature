@@ -1,10 +1,4 @@
-import React, {
-  useEffect,
-  useState,
-  useCallback,
-  createContext,
-  useContext,
-} from 'react';
+import React, { useEffect, useState, createContext, useContext } from 'react';
 
 const AuthContext = createContext({});
 
@@ -16,7 +10,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 5000);
+    }, 1000);
   }, []);
 
   return (
