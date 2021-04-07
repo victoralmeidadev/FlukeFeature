@@ -1,13 +1,11 @@
 import styled from 'styled-components/native';
+export { Container, Header, Text, Logo, styles } from '../styles';
 
-export const Container = styled.View`
+export const Content = styled.View`
   flex: 1;
-  align-items: center;
-  justify-content: center;
+  padding: 0 20px;
   background-color: #fff;
+  align-items: center;
 `;
 
-export const Text = styled.Text`
-  font-size: 25px;
-  color: #333;
-`;
+export const Loading = styled.ActivityIndicator``;
