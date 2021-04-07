@@ -1,12 +1,1 @@
-import styled from 'styled-components/native';
-
-export const Container = styled.View`
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-`;
-
-export const Text = styled.Text`
-  font-size: 25px;
-  color: #333;
-`;
+export { Container, Header, Text, Logo, styles } from '../styles';

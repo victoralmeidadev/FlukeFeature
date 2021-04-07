@@ -14,7 +14,7 @@ export const Header = styled.View`
 `;
 
 export const Text = styled.Text`
-  font-size: 25px;
+  font-size: 18px;
   color: #333;
 `;
 
@@ -24,4 +24,5 @@ export const Logo = styled.Image`
 
 export const styles = StyleSheet.create({
   logoStyle: { resizeMode: 'contain' },
+  horizontalScroll: { alignItems: 'center', justifyContent: 'center' },
 });
