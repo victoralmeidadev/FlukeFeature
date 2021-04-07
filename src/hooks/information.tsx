@@ -14,8 +14,8 @@ interface IInformationContext {
 }
 
 export const AuthProvider: React.FC = ({ children }) => {
-  const [record, setRecord] = useState<RecordData[]>([] as RecordData[]);
-  const [packageInformation, setPackageInformation] = useState<PackageInformationData>({} as PackageInformationData);
+  const [record, setRecord] = useState<RecordData[] | null>(null);
+  const [packageInformation, setPackageInformation] = useState<PackageInformationData | null>(null);
 
   const getRecords = useCallback(async (startDate: string, endDate: string) => {
     const result = await getRecordService(startDate, endDate);

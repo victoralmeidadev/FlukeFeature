@@ -4,17 +4,14 @@ export type RecordData = {
   data: number;
 };
 
+export type PackageType = {
+  subscription: number;
+  topup: number;
+  available: number;
+};
 export type PackageInformationData = {
-  data: {
-    subscription: number;
-    topup: number;
-    available: number;
-  };
-  minutes: {
-    subscription: number;
-    topup: number;
-    available: number;
-  };
+  data: PackageType;
+  minutes: PackageType;
 };
 
 export type PurchaseData = {
