@@ -1,8 +1,7 @@
-import React, { useEffect, useCallback, useState, useMemo, Fragment } from 'react';
-import { ScrollView } from 'react-native';
+import React, { useEffect, useMemo } from 'react';
 
 import Card from '../../components/Card';
-import { Container, Content, Header, Logo, Loading, styles } from './styles';
+import { Container, Content, Header, Logo, Loading, CardContainer, styles, logoSource } from './styles';
 
 import { useInformation } from '../../hooks/information';
 
@@ -16,10 +15,10 @@ const Home = () => {
   const renderCards = useMemo(() => {
     if (packageInformation) {
       return (
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalScroll}>
+        <CardContainer>
           <Card title="meus minutos" data={packageInformation?.minutes} text="min" />
           <Card title="meus dados" data={packageInformation?.data} text="gb" />
-        </ScrollView>
+        </CardContainer>
       );
     }
     return <Loading size="large" color="#00ff00" />;
@@ -27,7 +26,7 @@ const Home = () => {
   return (
     <Container>
       <Header>
-        <Logo source={require('../../assets/images/logo_fluke.png')} style={styles.logoStyle}></Logo>
+        <Logo source={logoSource} style={styles.logoStyle}></Logo>
       </Header>
       <Content>{renderCards}</Content>
     </Container>

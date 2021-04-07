@@ -1,10 +1,12 @@
 import React from 'react';
-import { Container, Text } from './styles';
+import { Container, Header, Logo, styles, logoSource } from './styles';
 
 const History = () => {
   return (
     <Container>
-      <Text>History</Text>
+      <Header>
+        <Logo source={logoSource} style={styles.logoStyle}></Logo>
+      </Header>
     </Container>
   );
 };

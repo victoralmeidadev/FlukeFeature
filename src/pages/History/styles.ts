@@ -1,1 +1,1 @@
-export { Container, Header, Text, Logo, styles } from '../styles';
+export { Container, Header, Text, Logo, styles, logoSource } from '../styles';
