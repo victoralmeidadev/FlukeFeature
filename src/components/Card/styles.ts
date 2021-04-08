@@ -17,27 +17,27 @@ export const CardComponent = styled.View`
 `;
 
 export const Title = styled.Text`
-  font-size: 22px;
+  font-size: 25px;
   margin: 10px;
-  font-weight: bold;
+  font-family: Nunito-Regular;
 `;
 
 export const NumberText = styled.Text`
-  font-size: 70px;
+  font-size: 65px;
   color: #111;
-  font-weight: 300;
+  font-family: Nunito-ExtraBold;
   margin: 0;
 `;
 
 export const SupportText = styled.Text`
   font-size: 20px;
   color: #333;
-  font-weight: 100;
+  font-family: Nunito-Regular;
   margin: 0;
 `;
 export const BottomText = styled.Text`
   font-size: 20px;
   color: #333;
-  font-weight: bold;
+  font-family: Nunito-Bold;
   margin: 0;
 `;

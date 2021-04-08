@@ -49,8 +49,8 @@ function Card({ title, data, text }: CardProps) {
           percent={showPercentage()}
           radius={width * 0.3}
           borderWidth={5}
-          color="#fff"
-          shadowColor="#34e567"
+          color="#333"
+          shadowColor="#fff"
           bgColor="#0ef500">
           <NumberText>
             {showAvailable()} <SupportText>{text}</SupportText>
