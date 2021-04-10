@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useRef, useEffect, useState } from 'react';
-
+import { NavigationProp } from '@react-navigation/native';
 import BottomSheet from '@gorhom/bottom-sheet';
 
 import { Container, Content, Header, Logo, Loading, CardContainer, styles, logoSource } from './styles';
@@ -9,7 +9,10 @@ import BuyPack from '../BuyPack';
 
 import { useInformation } from '../../hooks/information';
 
-const Home = () => {
+interface IHome {
+  navigation: NavigationProp<any, any>;
+}
+const Home: React.FC<IHome> = ({ navigation }) => {
   const { packageInformation, getPackageInformation } = useInformation();
   const [buying, setBuying] = useState<0 | 1>(0);
 
@@ -22,7 +25,7 @@ const Home = () => {
   const snapPoints = useMemo(() => ['8%', '85%'], []);
 
   const handleSheetChanges = useCallback((index: number) => {
-    setBuying(index);
+    setBuying(index ? 1 : 0);
   }, []);
 
   const renderCards = useMemo(() => {
@@ -48,7 +51,7 @@ const Home = () => {
         index={buying}
         snapPoints={snapPoints}
         onChange={handleSheetChanges}>
-        <BuyPack buying={buying} packageInformation={packageInformation} />
+        <BuyPack buying={buying} packageInformation={packageInformation} navigation={navigation} />
       </BottomSheet>
     </Container>
   );
