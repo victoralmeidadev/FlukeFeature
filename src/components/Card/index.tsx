@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import ProgressCircle from 'react-native-progress-circle';
 
 import { CardContainer, Title, CardComponent, NumberText, SupportText, BottomText, width, height } from './styles';
-
+import { convertToGB } from '../../utils';
 import { PackageType } from '../../hooks/types';
 
 interface CardProps {
@@ -12,21 +12,17 @@ interface CardProps {
 }
 
 function Card({ title, data, text }: CardProps) {
-  const convertGigabyte = useCallback((value) => {
-    return Number((value / 1000).toFixed(2));
-  }, []);
   const showAvailable = useCallback(() => {
     const { available } = data;
     if (text === 'min') {
       return available;
     } else {
-      return Number((available / 1000).toFixed(2));
+      return convertToGB(available);
     }
   }, []);
 
   const showPercentage = useCallback(() => {
     const { topup, subscription, available } = data;
-    console.log({ topup, subscription, available });
     return (available / (topup + subscription)) * 100;
   }, []);
 
@@ -37,7 +33,7 @@ function Card({ title, data, text }: CardProps) {
     if (text === 'min') {
       return `de ${total} min`;
     } else {
-      return `de ${convertGigabyte(total)} gb`;
+      return `de ${convertToGB(total)} gb`;
     }
   }, []);
 

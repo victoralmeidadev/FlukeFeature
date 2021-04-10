@@ -23,20 +23,20 @@ export const Title = styled.Text`
 `;
 
 export const NumberText = styled.Text`
-  font-size: 65px;
+  font-size: 60px;
   color: #111;
   font-family: Nunito-ExtraBold;
   margin: 0;
 `;
 
 export const SupportText = styled.Text`
-  font-size: 20px;
+  font-size: 18px;
   color: #333;
   font-family: Nunito-Regular;
   margin: 0;
 `;
 export const BottomText = styled.Text`
-  font-size: 20px;
+  font-size: 18px;
   color: #333;
   font-family: Nunito-Bold;
   margin: 0;
