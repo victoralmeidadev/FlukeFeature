@@ -10,7 +10,7 @@ interface IInformationContext {
   getRecords(startDate: string, endDate: string): void;
   packageInformation: PackageInformationData;
   getPackageInformation(): void;
-  handleTopupPurchase(): void;
+  handleTopupPurchase(data: number, minutes: number): void;
 }
 
 export const AuthProvider: React.FC = ({ children }) => {
