@@ -16,6 +16,7 @@ import {
   HorizontalRow,
   PurchaseButton,
   PurchaseButtonText,
+  Loading,
 } from './styles';
 
 import { useInformation } from '../../hooks/information';
@@ -45,29 +46,39 @@ const Purchase: React.FC<IPurchase> = ({ navigation }) => {
   const [minutes, setMinutes] = useState<number>(0);
   const [messages, setMessages] = useState<number>(0);
   const [totalPrice, setTotalPrice] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const handlePackButton = useCallback((operation: Operation, section: Section) => {
-    switch (section) {
-      case Section.data: {
-        setData((data) => {
-          return operation === 'increase' ? data + MinPackValue.data : data > 0 ? data - MinPackValue.data : 0;
-        });
-        break;
+  const handlePackButton = useCallback(
+    (operation: Operation, section: Section) => {
+      if (!loading) {
+        switch (section) {
+          case Section.data: {
+            setData((data) => {
+              return operation === 'increase' ? data + MinPackValue.data : data > 0 ? data - MinPackValue.data : 0;
+            });
+            break;
+          }
+          case Section.minute: {
+            setMinutes((data) => {
+              return operation === 'increase' ? data + MinPackValue.minute : data > 0 ? data - MinPackValue.minute : 0;
+            });
+            break;
+          }
+          case Section.message: {
+            setMessages((data) => {
+              return operation === 'increase'
+                ? data + MinPackValue.message
+                : data > 0
+                ? data - MinPackValue.message
+                : 0;
+            });
+            break;
+          }
+        }
       }
-      case Section.minute: {
-        setMinutes((data) => {
-          return operation === 'increase' ? data + MinPackValue.minute : data > 0 ? data - MinPackValue.minute : 0;
-        });
-        break;
-      }
-      case Section.message: {
-        setMessages((data) => {
-          return operation === 'increase' ? data + MinPackValue.message : data > 0 ? data - MinPackValue.message : 0;
-        });
-        break;
-      }
-    }
-  }, []);
+    },
+    [loading],
+  );
 
   const getTotalPrice = useCallback(() => {
     const dataPrice = data * 12;
@@ -129,19 +140,31 @@ const Purchase: React.FC<IPurchase> = ({ navigation }) => {
     });
   }, [data, minutes, messages, handlePackButton]);
 
-  const handlePurchase = useCallback(() => {
-    handleTopupPurchase(data * 1000, minutes);
-    navigation.goBack();
+  const handlePurchase = useCallback(async () => {
+    setLoading(true);
+
+    const result = await handleTopupPurchase(data * 1000, minutes);
+    if (result) {
+      navigation.goBack();
+    }
   }, [data, minutes]);
   const renderButton = useMemo(() => {
-    if (totalPrice > 0) {
+    if (totalPrice > 0 && !loading) {
       return (
         <PurchaseButton onPressIn={handlePurchase} android_ripple={{ radius: 10 }}>
           <PurchaseButtonText>comprar</PurchaseButtonText>
         </PurchaseButton>
       );
+    } else if (totalPrice > 0 && loading) {
+      return (
+        <PurchaseButton>
+          <Loading size="large" color="#333" />
+        </PurchaseButton>
+      );
+    } else {
+      return null;
     }
-  }, [totalPrice]);
+  }, [totalPrice, !loading]);
   return (
     <Container>
       <Content>

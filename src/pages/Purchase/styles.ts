@@ -69,10 +69,10 @@ export const HorizontalRow = styled.View`
 export const PurchaseButton = styled.Pressable`
   background-color: #0ef500;
   border-radius: 8px;
-  padding: 10px 20px;
   align-items: center;
   justify-content: center;
   margin: 5px;
+  height: 50px;
 `;
 
 export const PurchaseButtonText = styled.Text`
@@ -81,3 +81,5 @@ export const PurchaseButtonText = styled.Text`
   font-family: Nunito-ExtraBold;
   margin: 5px;
 `;
+
+export const Loading = styled.ActivityIndicator``;
