@@ -10,7 +10,7 @@ interface IInformationContext {
   getRecords(startDate: string, endDate: string): void;
   packageInformation: PackageInformationData;
   getPackageInformation(): void;
-  handleTopupPurchase(data: number, minutes: number): void;
+  handleTopupPurchase(data: number, minutes: number): boolean;
 }
 
 export const AuthProvider: React.FC = ({ children }) => {
@@ -29,9 +29,11 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   const handleTopupPurchase = useCallback(async (data: number, minutes: number) => {
     const result = await purchaseService(data, minutes);
-    if (result) {
-      getPackageInformation();
+    if (result !== null) {
+      await getPackageInformation();
+      return true;
     }
+    return false;
   }, []);
 
   return (
