@@ -1,5 +1,7 @@
 import React, { useCallback, useMemo, useRef, useEffect, useState } from 'react';
+import { ScrollView, RefreshControl } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
+
 import BottomSheet from '@gorhom/bottom-sheet';
 
 import { Container, Content, Header, Logo, Loading, CardContainer, styles, logoSource } from './styles';
@@ -15,6 +17,7 @@ interface IHome {
 const Home: React.FC<IHome> = ({ navigation }) => {
   const { packageInformation, getPackageInformation } = useInformation();
   const [buying, setBuying] = useState<0 | 1>(0);
+  const [refreshing, setRefreshing] = useState<boolean>(false);
 
   useEffect(() => {
     getPackageInformation();
@@ -28,10 +31,16 @@ const Home: React.FC<IHome> = ({ navigation }) => {
     setBuying(index ? 1 : 0);
   }, []);
 
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await getPackageInformation();
+    setRefreshing(false);
+  }, []);
+
   const renderCards = useMemo(() => {
     if (packageInformation) {
       return (
-        <CardContainer>
+        <CardContainer key={JSON.stringify(packageInformation)}>
           <Card title="meus minutos" data={packageInformation?.minutes} text="min" />
           <Card title="meus dados" data={packageInformation?.data} text="gb" />
         </CardContainer>
@@ -41,10 +50,12 @@ const Home: React.FC<IHome> = ({ navigation }) => {
   }, [packageInformation]);
   return (
     <Container>
-      <Header>
-        <Logo source={logoSource} style={styles.logoStyle}></Logo>
-      </Header>
-      <Content>{renderCards}</Content>
+      <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+        <Header>
+          <Logo source={logoSource} style={styles.logoStyle}></Logo>
+        </Header>
+        <Content>{renderCards}</Content>
+      </ScrollView>
       <BottomSheet
         style={styles.bottomSheetStyle}
         ref={bottomSheetRef}
