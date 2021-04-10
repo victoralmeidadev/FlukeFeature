@@ -50,10 +50,8 @@ export const getPackageInformationService = async (): Promise<PackageInformation
 export const purchaseService = async (data: number, minutes: number): Promise<PurchaseData | null> => {
   const response = api
     .post(`${PURCHASE_URL}`, {
-      params: {
-        data,
-        minutes,
-      },
+      data,
+      minutes,
     })
     .then((response) => {
       return response?.data;

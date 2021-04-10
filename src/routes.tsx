@@ -1,4 +1,5 @@
 import React from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
@@ -8,28 +9,18 @@ import { useAuth } from './hooks/auth';
 
 import SplashScreen from './pages/SplashScreen';
 import Home from './pages/Home';
+import Purchase from './pages/Purchase';
 import History from './pages/History';
 import Profile from './pages/Profile';
 
+const MainStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const TopTab = createMaterialTopTabNavigator();
-
-const config = {
-  animation: 'spring',
-  config: {
-    stiffness: 1000,
-    damping: 500,
-    mass: 3,
-    overshootClamping: true,
-    restDisplacementThreshold: 0.01,
-    restSpeedThreshold: 0.01,
-  },
-};
 
 function TopTabHistory() {
   return (
     <TopTab.Navigator
-      initialRouteName="Home"
+      initialRouteName="Dados"
       tabBarOptions={{
         activeTintColor: '#000',
         labelStyle: { fontSize: 18, padding: 2, fontWeight: 'bold' },
@@ -41,7 +32,7 @@ function TopTabHistory() {
   );
 }
 
-function MainStackNavigator() {
+function BottomTabNavigator() {
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -81,11 +72,20 @@ function MainStackNavigator() {
   );
 }
 
+function MainStackNavigator() {
+  return (
+    <MainStack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
+      <MainStack.Screen name="Home" component={BottomTabNavigator} />
+      <MainStack.Screen name="Purchase" component={Purchase} options={{ headerShown: true, title: 'Adicionais' }} />
+    </MainStack.Navigator>
+  );
+}
+
 export default function Routes() {
   const { loading } = useAuth();
 
   if (loading) {
-    return <SplashScreen />;
+    return SplashScreen();
   } else {
     return MainStackNavigator();
   }
