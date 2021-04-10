@@ -1,10 +1,12 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useCallback } from 'react';
+import { NavigationProp } from '@react-navigation/native';
+
 import {
   Container,
   InformativeCard,
   InformativeText,
   HeaderText,
-  RowContent,
+  WrapperRow,
   Content,
   Button,
   ButtonText,
@@ -19,14 +21,16 @@ import {
   AvailableDataUnit,
   AvailableDataValue,
 } from './styles';
+import { convertToGB } from '../../utils';
 import { PackageInformationData } from '../../hooks/types';
 import { useInformation } from '../../hooks/information';
 
 interface IBuyPack {
   buying: 0 | 1;
   packageInformation: PackageInformationData;
+  navigation: NavigationProp<any, any>;
 }
-const BuyPack = ({ buying }: IBuyPack) => {
+const BuyPack: React.FC<IBuyPack> = ({ buying, navigation }) => {
   const { packageInformation } = useInformation();
 
   const renderHeader = useMemo(() => {
@@ -36,13 +40,17 @@ const BuyPack = ({ buying }: IBuyPack) => {
       }
     }
   }, [buying]);
+
+  const handlePurchase = useCallback(() => {
+    navigation.navigate('Purchase');
+  }, [navigation]);
   return (
     <Container>
       <Content>
         {renderHeader}
 
         <InformativeCard>
-          <RowContent>
+          <WrapperRow>
             <DateContent>
               <InformativeText>pacote atual</InformativeText>
               <InformativeTextSupport>até 11/06/2021</InformativeTextSupport>
@@ -50,37 +58,38 @@ const BuyPack = ({ buying }: IBuyPack) => {
             <Periodicity>
               <PeriodicityText>mensal</PeriodicityText>
             </Periodicity>
-          </RowContent>
+          </WrapperRow>
           <AvailableDataRow>
             <AvailableDataContent>
               <AvailableDataIcon name="signal" />
               <AvailableDataValue>
-                {Number((packageInformation.data.available / 1000).toFixed(2)) || 0}
-                <AvailableDataUnit>gb</AvailableDataUnit>
+                {convertToGB(packageInformation?.data?.available) || 0}
+                <AvailableDataUnit> gb</AvailableDataUnit>
               </AvailableDataValue>
             </AvailableDataContent>
             <AvailableDataContent>
               <AvailableDataIcon name="phone-alt" />
               <AvailableDataValue>
-                {packageInformation.minutes.available || 0} <AvailableDataUnit>min</AvailableDataUnit>
+                {packageInformation?.minutes?.available || 0}
+                <AvailableDataUnit> min</AvailableDataUnit>
               </AvailableDataValue>
             </AvailableDataContent>
             <AvailableDataContent>
               <AvailableDataIcon name="comment" />
               <AvailableDataValue>
-                0 <AvailableDataUnit>sms</AvailableDataUnit>
+                0<AvailableDataUnit> sms</AvailableDataUnit>
               </AvailableDataValue>
             </AvailableDataContent>
           </AvailableDataRow>
         </InformativeCard>
 
-        <RowContent>
+        <WrapperRow>
           <HeaderText>adicionais</HeaderText>
-          <Button>
+          <Button onPressIn={handlePurchase}>
             <ButtonText>comprar</ButtonText>
             <ButtonIcon name="plus" />
           </Button>
-        </RowContent>
+        </WrapperRow>
       </Content>
     </Container>
   );

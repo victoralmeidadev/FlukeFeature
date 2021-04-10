@@ -7,7 +7,7 @@ export const HeaderContent = styled.View`
   align-items: center;
   justify-content: center;
 `;
-export const RowContent = styled.View`
+export const WrapperRow = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
@@ -15,7 +15,7 @@ export const RowContent = styled.View`
   padding: 10px;
 `;
 
-export const Button = styled.TouchableOpacity`
+export const Button = styled.Pressable`
   border-radius: 10px;
   background-color: #0ef500;
   padding: 10px 20px;
@@ -28,13 +28,13 @@ export const ButtonText = styled.Text`
   font-size: 18px;
   color: #333;
   font-family: Nunito-Regular;
-  margin: 0 5px;
+  padding: 0 5px;
   text-transform: lowercase;
 `;
 
 export const ButtonIcon = styled(Icon)`
   font-size: 18px;
-  margin: 0 5px;
+  padding: 0 5px;
   color: #333;
 `;
 
@@ -98,15 +98,17 @@ export const AvailableDataContent = styled.View`
   align-items: center;
 `;
 export const AvailableDataIcon = styled(Icon)`
-  font-size: 25px;
+  font-size: 18px;
   margin: 5px;
   color: #ccc;
 `;
 export const AvailableDataValue = styled.Text`
-  font-size: 30px;
+  font-size: 18px;
   margin: 5px;
+  font-family: Nunito-Bold;
 `;
 export const AvailableDataUnit = styled.Text`
   font-size: 15px;
   margin: 5px;
+  font-family: Nunito-Light;
 `;
