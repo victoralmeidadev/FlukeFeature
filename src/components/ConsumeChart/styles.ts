@@ -39,7 +39,7 @@ export const GraphItemDay = styled.Text`
   transform: rotate(-90deg);
 `;
 
-export const GraphPeriodPicker = styled.Pressable`
+export const GraphPeriodPicker = styled.TouchableOpacity`
   background-color: #0ef500;
   align-self: stretch;
   margin: 20px;
@@ -54,9 +54,16 @@ export const GraphPeriodPickerText = styled.Text`
   font-family: Nunito-Bold;
   font-size: 25px;
 `;
+export const GraphPeriodPickerTextAux = styled.Text`
+  color: #333;
+  font-family: Nunito-Regular;
+  font-size: 10px;
+`;
 
 export const BottomSheetWrapper = styled.View`
   flex: 1;
   align-items: center;
   justify-content: center;
 `;
+
+export const Loading = styled.ActivityIndicator``;

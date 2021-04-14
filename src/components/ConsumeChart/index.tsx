@@ -16,6 +16,8 @@ import {
   GraphPeriodPicker,
   GraphPeriodPickerText,
   BottomSheetWrapper,
+  Loading,
+  GraphPeriodPickerTextAux,
 } from './styles';
 import { useInformation } from '../../hooks/information';
 import { RecordData } from '../../hooks/types';
@@ -33,6 +35,8 @@ const ConsumeChart: React.FC<IConsumeChart> = ({ y }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [totalPeriodData, setTotalPeriodData] = useState<Omit<RecordData, 'date'>>({ data: 0, voice: 0 });
   const [data, setData] = useState<RecordData[] | null>(null);
+  const [current, setCurrent] = useState(0);
+  const [loading, setLoading] = useState(false);
   const bottomSheetRef = useRef<BottomSheet>(null);
 
   const calcHeightScale = useCallback(
@@ -53,26 +57,37 @@ const ConsumeChart: React.FC<IConsumeChart> = ({ y }) => {
 
   const handleGetPeriod = useCallback(
     async (start: Date = startDate) => {
-      const endPeriod = addDays(start, PERIOD);
-      const endDateFormatted = format(endPeriod, 'yyyy-MM-dd');
-      const startDateFormatted = format(start, 'yyyy-MM-dd');
+      if (!loading) {
+        setLoading(true);
+        const endPeriod = addDays(start, PERIOD);
+        const endDateFormatted = format(endPeriod, 'yyyy-MM-dd');
+        const startDateFormatted = format(start, 'yyyy-MM-dd');
 
-      const result = await getRecords(startDateFormatted, endDateFormatted);
-      if (result.length) {
-        calcHeightScale(result);
-        setData(result);
-        bottomSheetRef.current?.close();
-      } else {
-        setData(null);
-        bottomSheetRef.current?.close();
+        const result = await getRecords(startDateFormatted, endDateFormatted);
+        if (result.length) {
+          calcHeightScale(result);
+          setData(result);
+          setLoading(false);
+          bottomSheetRef.current?.close();
+        } else {
+          setData(null);
+          setLoading(false);
+          bottomSheetRef.current?.close();
+        }
       }
     },
-    [startDate, bottomSheetRef],
+    [startDate, bottomSheetRef, loading],
   );
 
   useEffect(() => {
     handleGetPeriod();
   }, []);
+
+  useEffect(() => {
+    if (!current) {
+      handleGetPeriod();
+    }
+  }, [current]);
 
   const renderItem = useCallback(
     ({ item }) => {
@@ -100,7 +115,7 @@ const ConsumeChart: React.FC<IConsumeChart> = ({ y }) => {
         );
       }
     },
-    [totalPeriodData],
+    [totalPeriodData, loading],
   );
 
   const handleChangeDate = useCallback((date: Date) => {
@@ -118,20 +133,27 @@ const ConsumeChart: React.FC<IConsumeChart> = ({ y }) => {
     <Container>
       <GraphContainer>
         {data &&
+          !loading &&
           data.map((item) => {
             return renderItem({ item });
           })}
-        {!data && <GraphItemTitle>período sem histórico</GraphItemTitle>}
+        {!data && !loading && <GraphItemTitle>período sem histórico</GraphItemTitle>}
+        {loading && <Loading size="large" color="#333" />}
       </GraphContainer>
-      <GraphPeriodPicker onPressIn={() => bottomSheetRef.current?.expand()}>
+      <GraphPeriodPicker onPress={() => bottomSheetRef.current?.snapTo(1, true)}>
         <GraphPeriodPickerText>{getPeriodText()}</GraphPeriodPickerText>
+        <GraphPeriodPickerTextAux>clique para buscar período</GraphPeriodPickerTextAux>
       </GraphPeriodPicker>
 
-      <BottomSheet ref={bottomSheetRef} index={0} snapPoints={['0%', '100%']}>
+      <BottomSheet
+        ref={bottomSheetRef}
+        index={current}
+        snapPoints={['0%', '100%']}
+        onChange={(index) => setCurrent(index)}>
         <BottomSheetWrapper>
           <DatePicker date={startDate} onDateChange={handleChangeDate} mode="date" />
           <GraphPeriodPicker onPressIn={() => handleGetPeriod(startDate)}>
-            <GraphPeriodPickerText>confirmar</GraphPeriodPickerText>
+            {loading ? <Loading size="large" color="#333" /> : <GraphPeriodPickerText>confirmar</GraphPeriodPickerText>}
           </GraphPeriodPicker>
         </BottomSheetWrapper>
       </BottomSheet>
