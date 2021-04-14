@@ -12,7 +12,7 @@ import {
   LeftContent,
 } from './styles';
 
-const Profile = () => {
+const Profile = ({ navigation }) => {
   return (
     <Container>
       <Header>
@@ -48,7 +48,7 @@ const Profile = () => {
 
           <ChevronIcon name="chevron-right" />
         </WrapperButton>
-        <WrapperButton>
+        <WrapperButton onPress={() => navigation.navigate('Help')}>
           <LeftContent>
             <MenuIcon name="question" />
             <MenuText>ajuda</MenuText>

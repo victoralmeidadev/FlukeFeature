@@ -28,7 +28,7 @@ export const ProfileName = styled.Text`
   margin: 10px 20px;
 `;
 
-export const WrapperButton = styled.Pressable`
+export const WrapperButton = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;

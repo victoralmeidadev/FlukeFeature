@@ -12,6 +12,7 @@ import Home from './pages/Home';
 import Purchase from './pages/Purchase';
 import History from './pages/History';
 import Profile from './pages/Profile';
+import Help from './pages/Help';
 
 const MainStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -77,6 +78,7 @@ function MainStackNavigator() {
     <MainStack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
       <MainStack.Screen name="Home" component={BottomTabNavigator} />
       <MainStack.Screen name="Purchase" component={Purchase} options={{ headerShown: true, title: 'Adicionais' }} />
+      <MainStack.Screen name="Help" component={Help} options={{ headerShown: true, title: 'Dúvidas frequentes' }} />
     </MainStack.Navigator>
   );
 }
