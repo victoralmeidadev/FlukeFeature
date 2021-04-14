@@ -7,7 +7,7 @@ const InformationContext = createContext({});
 
 interface IInformationContext {
   record: RecordData[];
-  getRecords(startDate: string, endDate: string): void;
+  getRecords(startDate: string, endDate: string): RecordData[];
   packageInformation: PackageInformationData;
   getPackageInformation(): void;
   handleTopupPurchase(data: number, minutes: number): boolean;
@@ -19,7 +19,12 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   const getRecords = useCallback(async (startDate: string, endDate: string) => {
     const result = await getRecordService(startDate, endDate);
-    result ? setRecord(result) : getRecords(startDate, endDate);
+    if (result !== null) {
+      setRecord(result);
+      return result;
+    } else {
+      getRecords(startDate, endDate);
+    }
   }, []);
 
   const getPackageInformation = useCallback(async () => {
