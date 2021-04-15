@@ -8,6 +8,7 @@ Aplicativo desenvolvido a partir de desafio proposto utilizando serviços de tes
 
 [Baixe o APK](https://drive.google.com/file/d/1dZZMllMgwPO_hh4YhVkJuFy1PEn5W-lb/view?usp=sharing) ou então, considerando que o seu ambiente react-native já esteja configurado:
 
+- Clone o repositório `git clone https://github.com/victoralmeidadev/FlukeFeature.git`
 - Instale as depêndencias utilizando o comando `yarn` ou `npm install`
 - Execute o comando `npx react-native run-android` ou `yarn start`
   - Observação: o projeto não foi configurado totalmente para o iOS. TODO
