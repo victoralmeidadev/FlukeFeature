@@ -33,3 +33,8 @@ Aplicativo desenvolvido a partir de desafio proposto utilizando serviços de tes
 <img src="https://user-images.githubusercontent.com/23178052/114794774-78445780-9d63-11eb-94a3-a5d072c888c0.png" width="20%" /> <img src="https://user-images.githubusercontent.com/23178052/114794781-7aa6b180-9d63-11eb-975f-80206c9ab901.png" width="20%" /> 
 <img src="https://user-images.githubusercontent.com/23178052/114794784-7bd7de80-9d63-11eb-9aea-e860b44f2954.png" width="20%" />  <img src="https://user-images.githubusercontent.com/23178052/114794762-74b0d080-9d63-11eb-8fa3-6d3fdb2ab8d2.png" width="20%" />
 
+
+## TODO's
+- Implementar caminhos tristes
+- Refatoração componetização de componentes comum
+- Ajustar tipagem de rotas e parametros do navigation
